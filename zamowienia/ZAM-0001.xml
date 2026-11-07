@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+  <zamowienie>
+    <id>ZAM-0001</id>
+    <klient>
+      <imie>Piotr</imie>
+      <nazwisko>Lewandowski</nazwisko>
+    </klient>
+    <produkt>
+      <model>Giant Contend 3</model>
+      <typ>Szosowy</typ>
+      <rozmiar_ramy>M</rozmiar_ramy>
+    </produkt>
+    <ilosc>3</ilosc>
+  </zamowienie>

@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+  <zamowienie>
+    <id>ZAM-0002</id>
+    <klient>
+      <imie>Marta</imie>
+      <nazwisko>Kaminski</nazwisko>
+    </klient>
+    <produkt>
+      <model>Trek Marlin 5</model>
+      <typ>MTB</typ>
+      <rozmiar_ramy>L</rozmiar_ramy>
+    </produkt>
+    <ilosc>2</ilosc>
+  </zamowienie>
