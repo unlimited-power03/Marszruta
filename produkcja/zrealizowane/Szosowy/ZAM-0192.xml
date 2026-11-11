@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+  <zamowienie>
+    <id>ZAM-0192</id>
+    <klient>
+      <imie>Adam</imie>
+      <nazwisko>Nowak</nazwisko>
+    </klient>
+    <produkt>
+      <model>Trek Domane AL 2</model>
+      <typ>Szosowy</typ>
+      <rozmiar_ramy>S</rozmiar_ramy>
+    </produkt>
+    <ilosc>3</ilosc>
+  </zamowienie>

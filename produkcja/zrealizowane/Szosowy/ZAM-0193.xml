@@ -1,14 +1,14 @@
 <?xml version="1.0" ?>
   <zamowienie>
-    <id>ZAM-0001</id>
+    <id>ZAM-0193</id>
     <klient>
-      <imie>Piotr</imie>
+      <imie>Jan</imie>
       <nazwisko>Lewandowski</nazwisko>
     </klient>
     <produkt>
-      <model>Giant Contend 3</model>
+      <model>Specialized Allez</model>
       <typ>Szosowy</typ>
-      <rozmiar_ramy>M</rozmiar_ramy>
+      <rozmiar_ramy>S</rozmiar_ramy>
     </produkt>
-    <ilosc>3</ilosc>
+    <ilosc>1</ilosc>
   </zamowienie>

@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+  <zamowienie>
+    <id>ZAM-0189</id>
+    <klient>
+      <imie>Katarzyna</imie>
+      <nazwisko>Kowalski</nazwisko>
+    </klient>
+    <produkt>
+      <model>Giant Contend 3</model>
+      <typ>Szosowy</typ>
+      <rozmiar_ramy>L</rozmiar_ramy>
+    </produkt>
+    <ilosc>3</ilosc>
+  </zamowienie>

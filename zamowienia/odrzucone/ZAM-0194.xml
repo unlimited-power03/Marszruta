@@ -1,14 +1,14 @@
 <?xml version="1.0" ?>
   <zamowienie>
-    <id>ZAM-0003</id>
+    <id>ZAM-0194</id>
     <klient>
-      <imie>Marta</imie>
+      <imie>Anna</imie>
       <nazwisko>Nowak</nazwisko>
     </klient>
     <produkt>
-      <model>Kross Trans 5.0</model>
-      <typ>Miejski</typ>
+      <model>Giant Contend 3</model>
+      <typ>Szosowy</typ>
       <rozmiar_ramy>XL</rozmiar_ramy>
     </produkt>
-    <ilosc>3</ilosc>
+    <ilosc>-2</ilosc>
   </zamowienie>

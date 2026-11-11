@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+  <zamowienie>
+    <id>ZAM-0187</id>
+    <klient>
+      <imie>Tomasz</imie>
+      <nazwisko>Wojcik</nazwisko>
+    </klient>
+    <produkt>
+      <model>Giant Escape 3</model>
+      <typ>Miejski</typ>
+      <rozmiar_ramy>L</rozmiar_ramy>
+    </produkt>
+    <ilosc>2</ilosc>
+  </zamowienie>

@@ -5,14 +5,20 @@ import random
 from pathlib import Path
 from xml.dom.minidom import Document
 
+from database import (
+    inicjalizuj_baze,
+    zarezerwuj_numer_zamowienia
+)
+
 
 # ==========================================
 # KONFIGURACJA PROJEKTU
 # ==========================================
 
 KATALOG_PROJEKTU = Path(__file__).resolve().parent
+FOLDER_ZAMOWIENIA = KATALOG_PROJEKTU / "zamowienia" / "nowe"
 
-FOLDER_ZAMOWIENIA = KATALOG_PROJEKTU / "zamowienia"
+INTERWAL_GENEROWANIA = 1
 
 
 # ==========================================
@@ -53,10 +59,42 @@ ROZMIARY = ["S", "M", "L", "XL"]
 
 
 # ==========================================
+# SCENARIUSZE GENEROWANIA ZAMOWIEN
+# ==========================================
+
+SCENARIUSZE = {
+    "poprawne": 70,
+
+    "brak_id": 5,
+    "brak_nazwiska": 5,
+    "ilosc_zero": 5,
+    "ilosc_ujemna": 5,
+    "nieznany_typ": 2,
+    "nieznany_model": 3,
+
+    "bledny_rozmiar": 2,
+    "niezgodny_model_typ": 3
+}
+
+
+# ==========================================
+# LOSOWANIE SCENARIUSZA
+# ==========================================
+
+def losuj_scenariusz():
+
+    return random.choices(
+        population=list(SCENARIUSZE.keys()),
+        weights=list(SCENARIUSZE.values()),
+        k=1
+    )[0]
+
+
+# ==========================================
 # GENEROWANIE ZAMOWIENIA XML
 # ==========================================
 
-def generuj_zamowienie(numer):
+def generuj_zamowienie(zamowienie_id):
 
     # Losowanie danych klienta
     imie = random.choice(IMIONA)
@@ -72,18 +110,55 @@ def generuj_zamowienie(numer):
     rozmiar = random.choice(ROZMIARY)
     ilosc = random.randint(1, 3)
 
-    # Tworzenie dokumentu DOM
+    # Losowanie scenariusza
+    scenariusz = losuj_scenariusz()
+
+    # ======================================
+    # WPROWADZANIE KONTROLOWANYCH BLEDOW
+    # ======================================
+
+    if scenariusz == "brak_id":
+        pass
+
+    elif scenariusz == "brak_nazwiska":
+        nazwisko = ""
+
+    elif scenariusz == "ilosc_zero":
+        ilosc = 0
+
+    elif scenariusz == "ilosc_ujemna":
+        ilosc = -2
+
+    elif scenariusz == "nieznany_typ":
+        typ = "Elektryczny"
+
+    elif scenariusz == "nieznany_model":
+        model = "Nieznany Model X"
+
+    elif scenariusz == "bledny_rozmiar":
+        rozmiar = "XXL"
+
+    elif scenariusz == "niezgodny_model_typ":
+        typ = "Miejski"
+        model = "Giant Talon 3"
+
+    # ======================================
+    # TWORZENIE DOKUMENTU DOM
+    # ======================================
+
     doc = Document()
 
     zamowienie = doc.createElement("zamowienie")
     doc.appendChild(zamowienie)
 
     # Numer zamowienia
-    id_element = doc.createElement("id")
-    id_element.appendChild(
-        doc.createTextNode(f"ZAM-{numer:04d}")
-    )
-    zamowienie.appendChild(id_element)
+    if scenariusz != "brak_id":
+
+        id_element = doc.createElement("id")
+        id_element.appendChild(
+            doc.createTextNode(zamowienie_id)
+        )
+        zamowienie.appendChild(id_element)
 
     # Dane klienta
     klient = doc.createElement("klient")
@@ -93,9 +168,13 @@ def generuj_zamowienie(numer):
     imie_element.appendChild(doc.createTextNode(imie))
     klient.appendChild(imie_element)
 
-    nazwisko_element = doc.createElement("nazwisko")
-    nazwisko_element.appendChild(doc.createTextNode(nazwisko))
-    klient.appendChild(nazwisko_element)
+    if nazwisko:
+
+        nazwisko_element = doc.createElement("nazwisko")
+        nazwisko_element.appendChild(
+            doc.createTextNode(nazwisko)
+        )
+        klient.appendChild(nazwisko_element)
 
     # Dane produktu
     produkt = doc.createElement("produkt")
@@ -110,19 +189,32 @@ def generuj_zamowienie(numer):
     produkt.appendChild(typ_element)
 
     rozmiar_element = doc.createElement("rozmiar_ramy")
-    rozmiar_element.appendChild(doc.createTextNode(rozmiar))
+    rozmiar_element.appendChild(
+        doc.createTextNode(rozmiar)
+    )
     produkt.appendChild(rozmiar_element)
 
     # Ilosc zamowionych rowerow
     ilosc_element = doc.createElement("ilosc")
-    ilosc_element.appendChild(doc.createTextNode(str(ilosc)))
+    ilosc_element.appendChild(
+        doc.createTextNode(str(ilosc))
+    )
     zamowienie.appendChild(ilosc_element)
 
-    # Zapis dokumentu XML
-    nazwa_pliku = f"ZAM-{numer:04d}.xml"
+    # ======================================
+    # ZAPIS DOKUMENTU XML
+    # ======================================
+
+    nazwa_pliku = f"{zamowienie_id}.xml"
     sciezka = FOLDER_ZAMOWIENIA / nazwa_pliku
 
-    with open(sciezka, "w", encoding="utf-8") as plik:
+    # Najpierw zapisujemy plik tymczasowy
+    sciezka_tmp = FOLDER_ZAMOWIENIA / (
+        nazwa_pliku + ".tmp"
+    )
+
+    with open(sciezka_tmp, "w", encoding="utf-8") as plik:
+
         doc.writexml(
             plik,
             indent="  ",
@@ -130,9 +222,18 @@ def generuj_zamowienie(numer):
             newl="\n"
         )
 
-    print("\n================================")
+    # Publikujemy XML dopiero po zakonczeniu zapisu
+    os.replace(sciezka_tmp, sciezka)
+
+    # ======================================
+    # INFORMACJE W KONSOLI
+    # ======================================
+
+    print("\n========================================")
     print(f"UTWORZONO: {nazwa_pliku}")
-    print("================================")
+    print("========================================")
+
+    print(f"Scenariusz: {scenariusz}")
     print(f"Klient: {imie} {nazwisko}")
     print(f"Model: {model}")
     print(f"Typ: {typ}")
@@ -142,67 +243,47 @@ def generuj_zamowienie(numer):
 
 
 # ==========================================
-# USTALANIE KOLEJNEGO NUMERU ZAMOWIENIA
-# ==========================================
-
-def pobierz_nastepny_numer():
-
-    FOLDER_ZAMOWIENIA.mkdir(
-        parents=True,
-        exist_ok=True
-    )
-
-    najwyzszy_numer = 0
-
-    for plik in os.listdir(FOLDER_ZAMOWIENIA):
-
-        if plik.startswith("ZAM-") and plik.endswith(".xml"):
-
-            try:
-                numer = int(plik[4:-4])
-
-                if numer > najwyzszy_numer:
-                    najwyzszy_numer = numer
-
-            except ValueError:
-                continue
-
-    return najwyzszy_numer + 1
-
-
-# ==========================================
 # GLOWNA PETLA PROGRAMU
 # ==========================================
 
 def main():
 
-    # Automatyczne tworzenie folderu zamowien
     FOLDER_ZAMOWIENIA.mkdir(
         parents=True,
         exist_ok=True
     )
 
-    # Ustalenie kolejnego numeru
-    numer = pobierz_nastepny_numer()
+    # Upewniamy sie, ze baza i licznik istnieja
+    inicjalizuj_baze()
 
-    print("====================================")
+    print("========================================")
     print("       GENERATOR ZAMOWIEN XML")
-    print("====================================")
+    print("========================================")
 
-    print(f"Nastepny numer zamowienia: {numer}")
-    print("Nowe zamowienie co 60 sekund.")
-    print("Aby zatrzymac program, nacisnij CTRL+C.")
+    print("Numeracja zamowien: baza SQLite")
+    print(f"Folder docelowy: {FOLDER_ZAMOWIENIA}")
+    print(f"Interwal generowania: {INTERWAL_GENEROWANIA} sekund")
+
+    print("\nROZKLAD SCENARIUSZY:")
+
+    for nazwa, waga in SCENARIUSZE.items():
+        print(f"{nazwa}: {waga}%")
+
+    print("\nAby zatrzymac program, nacisnij CTRL+C.")
 
     try:
+
         while True:
 
-            generuj_zamowienie(numer)
+            # Rezerwujemy nowy numer bezposrednio w bazie
+            zamowienie_id = zarezerwuj_numer_zamowienia()
 
-            numer += 1
+            generuj_zamowienie(zamowienie_id)
 
-            time.sleep(60)
+            time.sleep(INTERWAL_GENEROWANIA)
 
     except KeyboardInterrupt:
+
         print("\nGenerator zostal zatrzymany.")
 
 

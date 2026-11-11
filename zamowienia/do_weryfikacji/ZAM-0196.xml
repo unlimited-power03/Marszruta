@@ -1,14 +1,14 @@
 <?xml version="1.0" ?>
   <zamowienie>
-    <id>ZAM-0002</id>
+    <id>ZAM-0196</id>
     <klient>
-      <imie>Marta</imie>
+      <imie>Adam</imie>
       <nazwisko>Kaminski</nazwisko>
     </klient>
     <produkt>
-      <model>Trek Marlin 5</model>
+      <model>Kross Level 4.0</model>
       <typ>MTB</typ>
-      <rozmiar_ramy>L</rozmiar_ramy>
+      <rozmiar_ramy>XXL</rozmiar_ramy>
     </produkt>
     <ilosc>2</ilosc>
   </zamowienie>

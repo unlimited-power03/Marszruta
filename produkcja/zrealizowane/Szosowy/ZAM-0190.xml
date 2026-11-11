@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+  <zamowienie>
+    <id>ZAM-0190</id>
+    <klient>
+      <imie>Marta</imie>
+      <nazwisko>Wojcik</nazwisko>
+    </klient>
+    <produkt>
+      <model>Specialized Allez</model>
+      <typ>Szosowy</typ>
+      <rozmiar_ramy>S</rozmiar_ramy>
+    </produkt>
+    <ilosc>2</ilosc>
+  </zamowienie>

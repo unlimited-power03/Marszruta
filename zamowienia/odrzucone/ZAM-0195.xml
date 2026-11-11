@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+  <zamowienie>
+    <klient>
+      <imie>Tomasz</imie>
+      <nazwisko>Lewandowski</nazwisko>
+    </klient>
+    <produkt>
+      <model>Romet Gazela</model>
+      <typ>Miejski</typ>
+      <rozmiar_ramy>L</rozmiar_ramy>
+    </produkt>
+    <ilosc>3</ilosc>
+  </zamowienie>

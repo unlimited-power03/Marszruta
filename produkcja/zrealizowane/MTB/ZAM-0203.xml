@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+  <zamowienie>
+    <id>ZAM-0203</id>
+    <klient>
+      <imie>Katarzyna</imie>
+      <nazwisko>Lewandowski</nazwisko>
+    </klient>
+    <produkt>
+      <model>Giant Talon 3</model>
+      <typ>MTB</typ>
+      <rozmiar_ramy>L</rozmiar_ramy>
+    </produkt>
+    <ilosc>2</ilosc>
+  </zamowienie>

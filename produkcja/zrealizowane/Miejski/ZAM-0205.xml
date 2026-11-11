@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+  <zamowienie>
+    <id>ZAM-0205</id>
+    <klient>
+      <imie>Adam</imie>
+      <nazwisko>Wojcik</nazwisko>
+    </klient>
+    <produkt>
+      <model>Kross Trans 5.0</model>
+      <typ>Miejski</typ>
+      <rozmiar_ramy>M</rozmiar_ramy>
+    </produkt>
+    <ilosc>1</ilosc>
+  </zamowienie>
